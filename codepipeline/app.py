@@ -57,8 +57,8 @@ class ServiceAPIPipeline(core.Stack):
         self.source_artifact = codepipeline.Artifact()
         
         # codebuild projects
-        self.codebuild_deploy_swagger = CodeBuildProjects(self, "CodebuildDeploy", buildspec='buildspec-swagger.yml')
-        self.codebuild_deploy_ecr = CodeBuildProjects(self, "CodebuildDeploy", buildspec='buildspec-docker.yml')
+        self.codebuild_deploy_swagger = CodeBuildProjects(self, "CodebuildSwagger", buildspec='buildspec-swagger.yml')
+        self.codebuild_deploy_ecr = CodeBuildProjects(self, "CodebuildDocker", buildspec='buildspec-docker.yml')
         
         # add source action
         self.source_stage.add_action(codepipeline_actions.GitHubSourceAction(

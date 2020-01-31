@@ -6,9 +6,10 @@ phases:
   install:
     runtime-versions:
       python: 3.7
+      docker: 18
     commands:
       - pip install awscli
   build:
     commands:
-      - aws apigateway put-rest-api --rest-api-id 6znhu1vqp6 --mode merge --body 'file://swagger.yaml'
-      - aws apigateway create-deployment --rest-api-id 6znhu1vqp6 --stage-name prod
+      - echo 'docker build -t test/imagename:tag'
+      - echo 'docker push ecr-repo'

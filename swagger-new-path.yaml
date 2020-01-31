@@ -1,0 +1,51 @@
+---
+swagger: "2.0"
+info:
+  version: "dev"
+  title: "apigateway-demo"
+basePath: "/prod"
+schemes:
+- "https"
+paths:
+  /python-apurva:
+    get:
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+      x-amazon-apigateway-integration:
+        uri: "http://pytho-Pytho-10N3N4SG0GSYZ-c8d5deb1da1f957f.elb.us-east-2.amazonaws.com"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        connectionType: "VPC_LINK"
+        connectionId: "${stageVariables.vpcLinkId}"
+        httpMethod: "GET"
+        type: "http_proxy"
+  /python-apurva-new-path:
+    get:
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+      x-amazon-apigateway-integration:
+        uri: "http://pytho-Pytho-10N3N4SG0GSYZ-c8d5deb1da1f957f.elb.us-east-2.amazonaws.com"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        connectionType: "VPC_LINK"
+        connectionId: "${stageVariables.vpcLinkId}"
+        httpMethod: "GET"
+        type: "http_proxy"
+definitions:
+  Empty:
+    type: "object"
+    title: "Empty Schema"

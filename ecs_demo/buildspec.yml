@@ -1,0 +1,16 @@
+version: 0.2
+
+run-as: root
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+      nodejs: 10
+      docker: 18
+    commands:
+      - npm i -g aws-cdk
+      - pip install aws-cdk.core aws-cdk.aws_apigateway aws-cdk.aws_ecs aws-cdk.aws_ecr aws-cdk.aws_ecs_patterns aws-cdk.aws_ec2
+  build:
+    commands:
+      - cdk deploy -o ../cdk.out  --require-approval never

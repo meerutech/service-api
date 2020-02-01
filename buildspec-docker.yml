@@ -9,6 +9,9 @@ phases:
       docker: 18
     commands:
       - pip install awscli
+      - eval $(aws ecr get-login)
+      - env | grep 'REPO_NAME'
+      #- aws ecr create-repository --repository-name
   build:
     commands:
       - echo 'docker build -t test/imagename:tag'

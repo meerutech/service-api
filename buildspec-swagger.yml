@@ -10,5 +10,6 @@ phases:
       - pip install awscli
   build:
     commands:
-      - echo 'aws apigateway put-rest-api --rest-api-id 6znhu1vqp6 --mode merge --body 'file://swagger.yaml''
-      - echo 'aws apigateway create-deployment --rest-api-id 6znhu1vqp6 --stage-name prod'
+      - api_gateway_id=$(aws apigateway get-rest-apis | jq -r '.[][] | select(.name=="apigateway-demo")|.id')
+      - aws apigateway put-rest-api --rest-api-id $api_gateway_id --mode merge --body 'file://swagger.yaml'
+      - aws apigateway create-deployment --rest-api-id $api_gateway_id --stage-name prod

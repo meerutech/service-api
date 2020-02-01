@@ -17,13 +17,16 @@ paths:
           schema:
             $ref: "#/definitions/Empty"
       x-amazon-apigateway-integration:
-        uri: "http://pytho-Pytho-10N3N4SG0GSYZ-c8d5deb1da1f957f.elb.us-east-2.amazonaws.com"
+        # Dynamically pull down and set URI
+        uri: "http://a53e9fde143bb11eaa6f706cbc48cd54-2c281d485ac5c852.elb.us-east-2.amazonaws.com"
         responses:
           default:
             statusCode: "200"
         passthroughBehavior: "when_no_match"
         connectionType: "VPC_LINK"
-        connectionId: "${stageVariables.vpcLinkId}"
+        # Should use stage variables when possible, connectionId is one
+        connectionId: "zfy5y2"
+        #connectionId: "${stageVariables.vpcLinkId}"
         httpMethod: "GET"
         type: "http_proxy"
 definitions:

@@ -16,5 +16,6 @@ phases:
     commands:
       - GIT_HASH=$(git rev-parse --short HEAD)
       - REPO_URL=$(aws ecr describe-repositories --repository-names $REPO_NAME | jq .repositories[].repositoryUri)
+      - ls -al
       - docker build -t "$REPO_URL/$REPO_NAME:$GIT_HASH" .
       - docker push "$REPO_URL/$REPO_NAME:$GIT_HASH"

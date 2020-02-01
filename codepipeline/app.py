@@ -31,7 +31,10 @@ class CodeBuildProjects(core.Construct):
             build_spec=codebuild.BuildSpec.from_source_filename(self.buildspec),
             environment_variables={
                 'REPO_NAME': codebuild.BuildEnvironmentVariable(value=config['CODEPIPELINE']['GITHUB_REPO'])
-            }
+            },
+            environment=codebuild.BuildEnvironment(
+                privileged=True
+            )
         )
         
         # TODO: Don't need admin, let's make this least privilege

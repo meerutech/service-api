@@ -15,6 +15,6 @@ phases:
   build:
     commands:
       - GIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION|cut -c 1-7)
-      - REPO_URL=$(aws ecr describe-repositories --repository-names $REPO_NAME | jq .repositories[].repositoryUri)
-      - docker build -t $REPO_URL/$REPO_NAME:$GIT_HASH .
-      - docker push $REPO_URL/$REPO_NAME:$GIT_HASH
+      - REPO_URL=$(aws ecr describe-repositories --repository-names $REPO_NAME | jq -r .repositories[].repositoryUri)
+      - docker build -t $REPO_URL:$GIT_HASH .
+      - docker push $REPO_URL:$GIT_HASH

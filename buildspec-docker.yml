@@ -9,10 +9,12 @@ phases:
       docker: 18
     commands:
       - pip install awscli
+      - yum install -y jq
       - eval $(aws ecr get-login --no-include-email)
-      - env | grep 'REPO_NAME'
-      #- aws ecr create-repository --repository-name
+      - aws ecr create-repository --repository-name $REPO_NAME || echo "REPO EXISTS"
   build:
     commands:
-      - echo 'docker build -t test/imagename:tag'
-      - echo 'docker push ecr-repo'
+      - GIT_HASH=$(git rev-parse --short HEAD)
+      - REPO_URL=$(aws ecr describe-repositories --repository-names $REPO_NAME | jq .repositories[].repositoryUri)
+      - docker build -t "$REPO_URL/$REPO_NAME:$GIT_HASH" .
+      - docker push "$REPO_URL/$REPO_NAME:$GIT_HASH"

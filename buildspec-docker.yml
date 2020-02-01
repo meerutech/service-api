@@ -9,7 +9,7 @@ phases:
       docker: 18
     commands:
       - pip install awscli
-      - eval $(aws ecr get-login)
+      - eval $(aws ecr get-login --no-include-email)
       - env | grep 'REPO_NAME'
       #- aws ecr create-repository --repository-name
   build:

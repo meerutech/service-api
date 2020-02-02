@@ -12,9 +12,26 @@ phases:
       - apt-get install -y jq
       - eval $(aws ecr get-login --no-include-email)
       - aws ecr create-repository --repository-name $REPO_NAME || echo "REPO EXISTS"
+      - echo '***** Installing shyaml:'
+      - pip install shyaml
+      - aws secretsmanager get-secret-value --secret-id codebuild-ssh-pub-key --query SecretString | tr -d '"' > ~/.ssh/id_rsa.pub
+      - aws secretsmanager get-secret-value --secret-id codebuild-ssh-priv-key --query SecretString | sed 's/\\n/\n/g' | tr -d '"' > ~/.ssh/id_rsa
+      - chmod 400 ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa.pub
+      - echo '***** Configuring Git:'
+      - echo '[user]' > ~/.gitconfig
+      - echo '    name = codebuild ci' >> ~/.gitconfig
+      - echo '    email = build@meerutech.com' >> ~/.gitconfig
+      - echo '***** Cloning Config Repo:'
+      - git clone git@github.com:meerutech:platform-config.git $HOME/platform-config
   build:
     commands:
       - GIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION|cut -c 1-7)
       - REPO_URL=$(aws ecr describe-repositories --repository-names $REPO_NAME | jq -r .repositories[].repositoryUri)
       - docker build -t $REPO_URL:$GIT_HASH .
       - docker push $REPO_URL:$GIT_HASH
+      - cd $HOME/platform-config
+      - oldtag=$(cat manifests/${REPO_NAME}/deployment.yaml | shyaml get-value spec.template.spec.containers.0.image | cut -f2 -d:)
+      - sed -i "s/${oldtag}/${GIT_HASH}/" manifests/${REPO_NAME}/deployment.yaml
+      - git add .
+      - git commit -a -m "Updating ${REPO_NAME} deployment to $IMAGE_TAG tag"
+      - git push

@@ -18,14 +18,14 @@ paths:
             $ref: "#/definitions/Empty"
       x-amazon-apigateway-integration:
         # Dynamically pull down and set URI
-        uri: "http://a53e9fde143bb11eaa6f706cbc48cd54-2c281d485ac5c852.elb.us-east-2.amazonaws.com"
+        uri: "http://ab2002ad2463a11eaa87102cc47117f3-4b8f53d76d89382c.elb.us-east-2.amazonaws.com"
         responses:
           default:
             statusCode: "200"
         passthroughBehavior: "when_no_match"
         connectionType: "VPC_LINK"
         # Should use stage variables when possible, connectionId is one
-        connectionId: "zfy5y2"
+        connectionId: "sipj2t"
         #connectionId: "${stageVariables.vpcLinkId}"
         httpMethod: "GET"
         type: "http_proxy"

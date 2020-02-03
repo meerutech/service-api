@@ -70,6 +70,7 @@ class ServiceAPIPipeline(core.Stack):
             output=self.source_artifact,
             owner=config['CODEPIPELINE']['GITHUB_OWNER'],
             repo=config['CODEPIPELINE']['GITHUB_REPO'],
+            branch=config['CODEPIPELINE']['GITHUB_BRANCH'],
             action_name='Pull_Source',
             run_order=1,
         ))

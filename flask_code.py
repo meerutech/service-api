@@ -8,7 +8,8 @@ app = Flask(__name__)
  
 @app.route('/')
 def hello_world():
-    return {'git_hash': getenv('GIT_HASH')}
+    return {'UPDATED': 'JUST NOW'}
+    #return {'git_hash': getenv('GIT_HASH')}
 
 
 if __name__ == '__main__':

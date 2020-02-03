@@ -22,7 +22,7 @@ phases:
       - echo '    name = codebuild ci' >> ~/.gitconfig
       - echo '    email = build@meerutech.com' >> ~/.gitconfig
       - echo '***** Cloning Config Repo:'
-      - git clone git@github.com:meerutech:platform-config.git $HOME/platform-config
+      - git clone git@github.com:meerutech/platform-config.git $HOME/platform-config
   build:
     commands:
       - GIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION|cut -c 1-7)

@@ -7,7 +7,7 @@ basePath: "/prod"
 schemes:
 - "https"
 paths:
-  /python-adam:
+  /python-adam-demo:
     get:
       produces:
       - "application/json"
